@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { Tabs, useRouter } from 'expo-router';
 
 import { ThemedText } from '@/components/themed-text';
 import { Colors, Fonts } from '@/constants/theme';
@@ -193,8 +193,18 @@ export default function WorkoutsScreen() {
   }
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: Colors[scheme].background }]}>
-      <ThemedText type="title" style={styles.heading}>Workouts</ThemedText>
+    <SafeAreaView edges={['bottom', 'left', 'right']} style={[styles.container, { backgroundColor: Colors[scheme].background }]}>
+      <Tabs.Screen
+        options={{
+          headerShown: true,
+          title: 'Workouts',
+          headerRight: () => (
+            <Pressable onPress={() => setSheetVisible(true)} hitSlop={12} style={styles.headerAdd}>
+              <Ionicons name="add" size={28} color={Colors[scheme].tint} />
+            </Pressable>
+          ),
+        }}
+      />
 
       {workouts.length === 0 ? (
         <View style={styles.empty}>
@@ -215,16 +225,6 @@ export default function WorkoutsScreen() {
           contentContainerStyle={styles.list}
         />
       )}
-
-      <Pressable
-        style={[styles.button, { backgroundColor: Colors[scheme].tint }]}
-        onPress={() => setSheetVisible(true)}
-        android_ripple={{ color: '#ffffff33' }}
-      >
-        <ThemedText style={[styles.buttonText, { color: Colors[scheme].buttonText }]}>
-          + New Workout
-        </ThemedText>
-      </Pressable>
 
       {menu && (
         <Modal transparent animationType="none" onRequestClose={closeMenu}>
@@ -265,10 +265,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  heading: {
-    paddingHorizontal: 20,
-    paddingTop: 16,
-    paddingBottom: 12,
+  headerAdd: {
+    marginRight: 16,
   },
   empty: {
     flex: 1,
@@ -297,16 +295,6 @@ const styles = StyleSheet.create({
   },
   moreButton: {
     padding: 4,
-  },
-  button: {
-    margin: 20,
-    paddingVertical: 16,
-    borderRadius: 12,
-    alignItems: 'center',
-  },
-  buttonText: {
-    fontWeight: '700',
-    fontSize: 16,
   },
   menuCard: {
     position: 'absolute',
