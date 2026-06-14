@@ -1,50 +1,67 @@
-# Welcome to your Expo app 👋
+# Gym Tracker
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A personal gym workout tracking app built with Expo and React Native. Stores data locally on-device via SQLite — no account or backend required.
 
-## Get started
+## Features
 
-1. Install dependencies
+- Create and delete named workouts with timestamps
+- Persistent local storage (SQLite, survives app restarts)
+- Light/dark mode support
+- Android-first; runs in Expo Go without a dev build
 
-   ```bash
-   npm install
-   ```
+## Stack
 
-2. Start the app
+| Layer | Tech |
+|---|---|
+| Framework | Expo SDK 54 / React Native 0.81 |
+| Language | TypeScript (strict) |
+| Routing | Expo Router v6 (file-based) |
+| Database | expo-sqlite (WAL mode, migration-based schema) |
+| State | React Context + custom hook |
+| Architecture | New Architecture + React Compiler enabled |
 
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Getting started
 
 ```bash
-npm run reset-project
+npm install
+npm start        # opens Expo dev server — scan QR with Expo Go
+npm run android  # open on Android emulator/device
+npm run ios      # open on iOS simulator
+npm run lint     # ESLint via expo lint
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Project layout
 
-## Learn more
+```
+app/
+  _layout.tsx          # root Stack + WorkoutsProvider
+  (tabs)/
+    _layout.tsx        # bottom tab navigator
+    index.tsx          # workout list screen
+db/
+  client.ts            # singleton DB connection, runs migrations on open
+  migrations.ts        # ordered migration array — append to add tables
+  workouts.ts          # typed DAO (getAllWorkouts, insertWorkout, …)
+store/
+  workouts.tsx         # WorkoutsProvider + useWorkouts() hook
+types/
+  workout.ts           # Workout type
+components/
+  themed-text.tsx      # dark-mode-aware Text wrapper
+  themed-view.tsx      # dark-mode-aware View wrapper
+  ui/icon-symbol.tsx   # SF Symbols (iOS) / MaterialIcons (Android)
+constants/
+  theme.ts             # Colors (light/dark) and Fonts
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+## Data model
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```ts
+type Workout = {
+  id: string;    // UUID
+  date: string;  // ISO 8601
+  name?: string;
+};
+```
 
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Schema migrations live in `db/migrations.ts` as an ordered array of `{ version, sql }` objects. Already-applied versions are skipped on startup.
