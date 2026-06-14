@@ -23,7 +23,8 @@ No test suite is configured yet.
 
 - `app/_layout.tsx` — root Stack navigator; wraps the app in `WorkoutsProvider` (outer) and `AppNavigator` (inner). `AppNavigator` reads `isLoading` from the workouts store and shows an `ActivityIndicator` until the DB is ready, then renders the `Stack` with `ThemeProvider`.
 - `app/(tabs)/_layout.tsx` — single-tab bottom navigator (Workouts). Add new tabs here.
-- `app/(tabs)/index.tsx` — workout list screen: FlatList of workouts + "New Workout" button.
+- `app/(tabs)/index.tsx` — workout list screen: FlatList of workouts. Uses `<Tabs.Screen options={{ headerRight: … }}>` rendered inside the component to wire a `+` icon into the native header — this is the established pattern for dynamic header buttons on this screen.
+- `app/workout/[id].tsx` — workout detail screen (dynamic route). Receives the workout `id` via `useLocalSearchParams`, looks it up in the workouts store, and sets the header title to the workout name via `<Stack.Screen options={{ title }}>`. Currently a placeholder view; add exercise tracking UI here.
 
 **Data layer** — SQLite via `expo-sqlite` (bundled in Expo Go, no dev build needed).
 

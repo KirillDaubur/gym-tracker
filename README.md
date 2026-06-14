@@ -5,6 +5,7 @@ A personal gym workout tracking app built with Expo and React Native. Stores dat
 ## Features
 
 - Create and delete named workouts with timestamps
+- Tap a workout to open its detail screen
 - Persistent local storage (SQLite, survives app restarts)
 - Light/dark mode support
 - Android-first; runs in Expo Go without a dev build
@@ -37,7 +38,9 @@ app/
   _layout.tsx          # root Stack + WorkoutsProvider
   (tabs)/
     _layout.tsx        # bottom tab navigator
-    index.tsx          # workout list screen
+    index.tsx          # workout list screen; header + button opens new-workout sheet
+  workout/
+    [id].tsx           # workout detail screen (dynamic route)
 db/
   client.ts            # singleton DB connection, runs migrations on open
   migrations.ts        # ordered migration array — append to add tables
