@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, View } from 'react-native';
 import 'react-native-reanimated';
 
+import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { WorkoutsProvider, useWorkouts } from '@/store/workouts';
 
@@ -23,11 +24,16 @@ function AppNavigator() {
     );
   }
 
+  const bg = Colors[colorScheme ?? 'light'].background;
+
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      </Stack>
+      <View style={{ flex: 1, backgroundColor: bg }}>
+        <Stack screenOptions={{ contentStyle: { backgroundColor: bg } }}>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="workout/[id]" />
+        </Stack>
+      </View>
       <StatusBar style="auto" />
     </ThemeProvider>
   );

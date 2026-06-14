@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
 import { ThemedText } from '@/components/themed-text';
 import { Colors, Fonts } from '@/constants/theme';
@@ -36,10 +37,12 @@ function formatDate(isoString: string): string {
 function WorkoutRow({
   workout,
   onOpenMenu,
+  onPress,
   scheme,
 }: {
   workout: Workout;
   onOpenMenu: (id: string, top: number, right: number) => void;
+  onPress: () => void;
   scheme: 'light' | 'dark';
 }) {
   // collapsable={false} prevents Android from flattening this view,
@@ -56,10 +59,10 @@ function WorkoutRow({
   return (
     <View style={[styles.row, { borderBottomColor: Colors[scheme].icon + '33' }]}>
       <View style={styles.rowContent}>
-        <View>
+        <Pressable style={styles.rowPressable} onPress={onPress} android_ripple={{ color: Colors[scheme].icon + '22' }}>
           <ThemedText type="defaultSemiBold">{workout.name ?? 'Workout'}</ThemedText>
           <ThemedText style={styles.date}>{formatDate(workout.date)}</ThemedText>
-        </View>
+        </Pressable>
         <View ref={moreRef} collapsable={false}>
           <Pressable onPress={handleMorePress} hitSlop={8} style={styles.moreButton}>
             <Ionicons name="ellipsis-vertical" size={18} color={Colors[scheme].icon} />
@@ -169,6 +172,7 @@ function NewWorkoutSheet({
 export default function WorkoutsScreen() {
   const { workouts, addWorkout, removeWorkout } = useWorkouts();
   const scheme = useColorScheme() ?? 'light';
+  const router = useRouter();
   const [menu, setMenu] = useState<MenuState>(null);
   const [sheetVisible, setSheetVisible] = useState(false);
 
@@ -201,7 +205,12 @@ export default function WorkoutsScreen() {
           data={workouts}
           keyExtractor={(w) => w.id}
           renderItem={({ item }) => (
-            <WorkoutRow workout={item} onOpenMenu={(id, top, right) => setMenu({ id, top, right })} scheme={scheme} />
+            <WorkoutRow
+              workout={item}
+              onOpenMenu={(id, top, right) => setMenu({ id, top, right })}
+              onPress={() => router.push(`/workout/${item.id}`)}
+              scheme={scheme}
+            />
           )}
           contentContainerStyle={styles.list}
         />
@@ -276,12 +285,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 14,
   },
   date: {
     fontSize: 13,
     marginTop: 2,
     opacity: 0.6,
+  },
+  rowPressable: {
+    flex: 1,
+    paddingVertical: 14,
   },
   moreButton: {
     padding: 4,
