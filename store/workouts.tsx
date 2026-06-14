@@ -43,7 +43,7 @@ export function WorkoutsProvider({ children }: { children: React.ReactNode }) {
       date: new Date().toISOString(),
       name,
     };
-    setWorkouts((prev) => [workout, ...prev]);
+    setWorkouts((prev) => [...prev, workout]);
     try {
       await insertWorkout(workout);
     } catch (err) {

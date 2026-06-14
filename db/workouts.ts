@@ -10,7 +10,7 @@ function rowToWorkout(row: WorkoutRow): Workout {
 export async function getAllWorkouts(): Promise<Workout[]> {
   const db = await getDb();
   const rows = await db.getAllAsync<WorkoutRow>(
-    'SELECT id, date, name FROM workouts ORDER BY date DESC;'
+    'SELECT id, date, name FROM workouts ORDER BY date ASC;'
   );
   return rows.map(rowToWorkout);
 }
