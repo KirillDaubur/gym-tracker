@@ -1,5 +1,6 @@
-import { getDb } from './client';
 import type { Workout } from '@/types/workout';
+
+import { getDb } from './client';
 
 type WorkoutRow = { id: string; date: string; name: string | null };
 

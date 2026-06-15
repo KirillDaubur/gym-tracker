@@ -1,3 +1,5 @@
+import { Ionicons } from '@expo/vector-icons';
+import { Tabs, useRouter } from 'expo-router';
 import { useRef, useState } from 'react';
 import {
   Dimensions,
@@ -11,8 +13,6 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
-import { Tabs, useRouter } from 'expo-router';
 
 import { ThemedText } from '@/components/themed-text';
 import { Colors, Fonts } from '@/constants/theme';
@@ -190,7 +190,7 @@ export default function WorkoutsScreen() {
 
   function handleDelete() {
     if (menu) {
-      removeWorkout(menu.id);
+      void removeWorkout(menu.id);
       closeMenu();
     }
   }

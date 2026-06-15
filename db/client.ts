@@ -1,4 +1,5 @@
 import * as SQLite from 'expo-sqlite';
+
 import { migrations } from './migrations';
 
 let dbPromise: Promise<SQLite.SQLiteDatabase> | null = null;

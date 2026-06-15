@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import type { Workout } from '@/types/workout';
+
 import { getAllWorkouts, insertWorkout, deleteWorkout } from '@/db/workouts';
+import type { Workout } from '@/types/workout';
 
 type WorkoutsContextType = {
   workouts: Workout[];
