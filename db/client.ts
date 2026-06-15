@@ -25,7 +25,7 @@ async function _runMigrations(db: SQLite.SQLiteDatabase): Promise<void> {
   `);
 
   const applied = await db.getAllAsync<{ version: number }>(
-    'SELECT version FROM migrations ORDER BY version ASC;'
+    'SELECT version FROM migrations ORDER BY version ASC;',
   );
   const appliedSet = new Set(applied.map((r) => r.version));
 
@@ -39,7 +39,7 @@ async function _runMigrations(db: SQLite.SQLiteDatabase): Promise<void> {
       await db.runAsync(
         'INSERT INTO migrations (version, applied_at) VALUES (?, ?);',
         migration.version,
-        new Date().toISOString()
+        new Date().toISOString(),
       );
     });
   }

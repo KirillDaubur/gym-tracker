@@ -59,7 +59,11 @@ function WorkoutRow({
   return (
     <View style={[styles.row, { borderBottomColor: Colors[scheme].icon + '33' }]}>
       <View style={styles.rowContent}>
-        <Pressable style={styles.rowPressable} onPress={onPress} android_ripple={{ color: Colors[scheme].icon + '22' }}>
+        <Pressable
+          style={styles.rowPressable}
+          onPress={onPress}
+          android_ripple={{ color: Colors[scheme].icon + '22' }}
+        >
           <ThemedText type="defaultSemiBold">{workout.name ?? 'Workout'}</ThemedText>
           <ThemedText style={styles.date}>{formatDate(workout.date)}</ThemedText>
         </Pressable>
@@ -143,7 +147,11 @@ function NewWorkoutSheet({
 
           <View style={styles.sheetActions}>
             <Pressable
-              style={[styles.actionButton, styles.cancelButton, { borderColor: Colors[scheme].icon + '55' }]}
+              style={[
+                styles.actionButton,
+                styles.cancelButton,
+                { borderColor: Colors[scheme].icon + '55' },
+              ]}
               onPress={handleClose}
             >
               <ThemedText style={styles.cancelText}>Cancel</ThemedText>
@@ -193,7 +201,10 @@ export default function WorkoutsScreen() {
   }
 
   return (
-    <SafeAreaView edges={['bottom', 'left', 'right']} style={[styles.container, { backgroundColor: Colors[scheme].background }]}>
+    <SafeAreaView
+      edges={['bottom', 'left', 'right']}
+      style={[styles.container, { backgroundColor: Colors[scheme].background }]}
+    >
       <Tabs.Screen
         options={{
           headerShown: true,
@@ -244,7 +255,12 @@ export default function WorkoutsScreen() {
               style={({ pressed }) => [styles.menuItem, pressed && styles.menuItemPressed]}
               onPress={handleDelete}
             >
-              <Ionicons name="trash-outline" size={16} color="#e53935" style={styles.menuItemIcon} />
+              <Ionicons
+                name="trash-outline"
+                size={16}
+                color="#e53935"
+                style={styles.menuItemIcon}
+              />
               <ThemedText style={styles.menuItemDelete}>Delete</ThemedText>
             </Pressable>
           </View>

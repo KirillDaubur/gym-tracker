@@ -10,7 +10,7 @@ function rowToWorkout(row: WorkoutRow): Workout {
 export async function getAllWorkouts(): Promise<Workout[]> {
   const db = await getDb();
   const rows = await db.getAllAsync<WorkoutRow>(
-    'SELECT id, date, name FROM workouts ORDER BY date ASC;'
+    'SELECT id, date, name FROM workouts ORDER BY date ASC;',
   );
   return rows.map(rowToWorkout);
 }
@@ -21,13 +21,13 @@ export async function insertWorkout(workout: Workout): Promise<void> {
     'INSERT INTO workouts (id, date, name) VALUES (?, ?, ?);',
     workout.id,
     workout.date,
-    workout.name ?? null
+    workout.name ?? null,
   );
 }
 
 export async function updateWorkout(
   id: string,
-  patch: Partial<Pick<Workout, 'name'>>
+  patch: Partial<Pick<Workout, 'name'>>,
 ): Promise<void> {
   const db = await getDb();
   if (patch.name !== undefined) {

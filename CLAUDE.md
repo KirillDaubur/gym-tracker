@@ -11,9 +11,20 @@ npm start          # Start Expo dev server (opens QR code / menu)
 npm run android    # Start and open on Android emulator/device
 npm run ios        # Start and open on iOS simulator
 npm run lint       # Run ESLint via expo lint
+npm run format     # Format all source files with Prettier (auto-fix)
+npm run format:check  # Check formatting without writing (good for CI)
 ```
 
 No test suite is configured yet.
+
+## Code style
+
+Prettier is configured in `.prettierrc`. **After editing any `.ts` / `.tsx` file, run `npm run format` on the changed files** — or run it on the whole project before committing. Never hand-format code; let Prettier own all whitespace decisions.
+
+To format only the files you touched:
+```bash
+npx prettier --write path/to/file.tsx
+```
 
 ## Architecture
 

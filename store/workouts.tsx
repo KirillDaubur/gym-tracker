@@ -59,7 +59,9 @@ export function WorkoutsProvider({ children }: { children: React.ReactNode }) {
       await deleteWorkout(id);
     } catch (err) {
       // Rollback: reload from DB
-      getAllWorkouts().then(setWorkouts).catch(() => {});
+      getAllWorkouts()
+        .then(setWorkouts)
+        .catch(() => {});
       throw err;
     }
   }
