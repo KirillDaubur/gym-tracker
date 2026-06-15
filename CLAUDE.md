@@ -19,11 +19,19 @@ No test suite is configured yet.
 
 ## Code style
 
-Prettier is configured in `.prettierrc`. **After editing any `.ts` / `.tsx` file, run `npm run format` on the changed files** — or run it on the whole project before committing. Never hand-format code; let Prettier own all whitespace decisions.
+Prettier is configured in `.prettierrc`. Formatting is automatic — a `PostToolUse` hook runs Prettier on every file after each edit. Never hand-format code.
 
-To format only the files you touched:
+## Git workflow
+
+**Always issue `git add` and `git commit` as separate Bash calls — never chain them with `&&`.** A `PreToolUse` hook on `git commit` runs `npm run lint` and blocks the commit if there are errors. Chaining bypasses this gate.
+
 ```bash
-npx prettier --write path/to/file.tsx
+# correct
+git add path/to/file.tsx
+git commit -m "message"
+
+# wrong — bypasses the lint gate
+git add path/to/file.tsx && git commit -m "message"
 ```
 
 ## Architecture
