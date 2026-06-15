@@ -59,4 +59,17 @@ git add path/to/file.tsx && git commit -m "message"
 
 **Icons** — `components/ui/icon-symbol.tsx` wraps SF Symbols on iOS and MaterialIcons on Android. Pass an SF Symbol name; the Android mapping lives in that file.
 
-**Platform splits** — files with `.ios.tsx` / `.web.ts` suffixes are platform-specific (e.g. `icon-symbol.ios.tsx`, `use-color-scheme.web.ts`). Metro picks the right one automatically.
+**Platform splits** — files with `.ios.tsx` / `.web.ts` suffixes are platform-specific (e.g. `icon-symbol.ios.tsx`, `use-color-scheme.web.ts`). 
+
+## Definition of Done
+
+A task is complete only when:
+
+- code is formatted
+- lint passes
+- TypeScript passes
+- relevant tests are added or updated
+- all tests pass
+- no unrelated files were changed
+- implementation is summarized
+- verification steps are provided
