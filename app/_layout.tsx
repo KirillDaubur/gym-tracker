@@ -6,6 +6,7 @@ import 'react-native-reanimated';
 
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { ExercisesProvider, useExercises } from '@/store/exercises';
 import { WorkoutsProvider, useWorkouts } from '@/store/workouts';
 
 export const unstable_settings = {
@@ -13,7 +14,9 @@ export const unstable_settings = {
 };
 
 function AppNavigator() {
-  const { isLoading } = useWorkouts();
+  const { isLoading: workoutsLoading } = useWorkouts();
+  const { isLoading: exercisesLoading } = useExercises();
+  const isLoading = workoutsLoading || exercisesLoading;
   const colorScheme = useColorScheme();
 
   if (isLoading) {
@@ -42,7 +45,9 @@ function AppNavigator() {
 export default function RootLayout() {
   return (
     <WorkoutsProvider>
-      <AppNavigator />
+      <ExercisesProvider>
+        <AppNavigator />
+      </ExercisesProvider>
     </WorkoutsProvider>
   );
 }

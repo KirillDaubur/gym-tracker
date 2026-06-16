@@ -23,6 +23,7 @@ describe('IconSymbol (Android/web fallback)', () => {
     ['chevron.right', 'chevron-right'],
     ['list.bullet', 'format-list-bulleted'],
     ['plus', 'add'],
+    ['dumbbell.fill', 'fitness-center'],
   ] as const)('maps SF Symbol "%s" to MaterialIcons name "%s"', async (sfSymbol, materialName) => {
     await render(<IconSymbol name={sfSymbol} color="#000" />);
 

@@ -11,7 +11,7 @@ function rowToExercise(row: ExerciseRow): Exercise {
 export async function getAllExercises(): Promise<Exercise[]> {
   const db = await getDb();
   const rows = await db.getAllAsync<ExerciseRow>(
-    'SELECT id, name FROM exercises ORDER BY name ASC;',
+    'SELECT id, name FROM exercises ORDER BY name COLLATE NOCASE ASC;',
   );
   return rows.map(rowToExercise);
 }
@@ -28,7 +28,7 @@ export async function getExerciseById(id: string): Promise<Exercise | null> {
 export async function searchExercisesByName(query: string): Promise<Exercise[]> {
   const db = await getDb();
   const rows = await db.getAllAsync<ExerciseRow>(
-    'SELECT id, name FROM exercises WHERE name LIKE ? ORDER BY name ASC;',
+    'SELECT id, name FROM exercises WHERE name LIKE ? ORDER BY name COLLATE NOCASE ASC;',
     `%${query}%`,
   );
   return rows.map(rowToExercise);

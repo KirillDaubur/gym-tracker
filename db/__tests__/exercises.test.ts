@@ -39,7 +39,7 @@ describe('db/exercises', () => {
       const result = await getAllExercises();
 
       expect(mockDb.getAllAsync).toHaveBeenCalledWith(
-        'SELECT id, name FROM exercises ORDER BY name ASC;',
+        'SELECT id, name FROM exercises ORDER BY name COLLATE NOCASE ASC;',
       );
       expect(result).toEqual([
         { id: '1', name: 'Bench press' },
@@ -77,7 +77,7 @@ describe('db/exercises', () => {
       const result = await searchExercisesByName('bench');
 
       expect(mockDb.getAllAsync).toHaveBeenCalledWith(
-        'SELECT id, name FROM exercises WHERE name LIKE ? ORDER BY name ASC;',
+        'SELECT id, name FROM exercises WHERE name LIKE ? ORDER BY name COLLATE NOCASE ASC;',
         '%bench%',
       );
       expect(result).toEqual([{ id: '1', name: 'Bench press' }]);

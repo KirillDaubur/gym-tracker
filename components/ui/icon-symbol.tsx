@@ -20,6 +20,7 @@ const MAPPING = {
   'chevron.right': 'chevron-right',
   'list.bullet': 'format-list-bulleted',
   plus: 'add',
+  'dumbbell.fill': 'fitness-center',
 } as IconMapping;
 
 /**

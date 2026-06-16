@@ -40,8 +40,9 @@ git add path/to/file.tsx && git commit -m "message"
 **Routing** — Expo Router v6 with file-based routing under `app/`. Path alias `@/` maps to the repo root.
 
 - `app/_layout.tsx` — root Stack navigator; wraps the app in `WorkoutsProvider` (outer) and `AppNavigator` (inner). `AppNavigator` reads `isLoading` from the workouts store and shows an `ActivityIndicator` until the DB is ready, then renders the `Stack` with `ThemeProvider`.
-- `app/(tabs)/_layout.tsx` — single-tab bottom navigator (Workouts). Add new tabs here.
+- `app/(tabs)/_layout.tsx` — bottom tab navigator (Workouts, Exercises). Add new tabs here.
 - `app/(tabs)/index.tsx` — workout list screen: FlatList of workouts. Uses `<Tabs.Screen options={{ headerRight: … }}>` rendered inside the component to wire a `+` icon into the native header — this is the established pattern for dynamic header buttons on this screen.
+- `app/(tabs)/exercises.tsx` — exercise list screen: FlatList of exercises from `useExercises()`, read-only, sorted alphabetically (case-insensitive ordering happens in `db/exercises.ts`, not client-side).
 - `app/workout/[id].tsx` — workout detail screen (dynamic route). Receives the workout `id` via `useLocalSearchParams`, looks it up in the workouts store, and sets the header title to the workout name via `<Stack.Screen options={{ title }}>`. Currently a placeholder view; add exercise tracking UI here.
 
 **Data layer** — SQLite via `expo-sqlite` (bundled in Expo Go, no dev build needed).
@@ -51,7 +52,7 @@ git add path/to/file.tsx && git commit -m "message"
 - `db/workouts.ts` — typed DAO: `getAllWorkouts`, `insertWorkout`, `updateWorkout`, `deleteWorkout`.
 - `db/exercises.ts` — typed DAO: `getAllExercises`, `getExerciseById`, `searchExercisesByName`, `insertExercise`, `updateExercise`, `deleteExercise`.
 
-**State** — `store/workouts.tsx` exposes `WorkoutsProvider` and `useWorkouts()`. On mount it loads all rows from SQLite; `addWorkout()` does an optimistic update then persists. Context type: `{ workouts, addWorkout, isLoading, error }`.
+**State** — `store/workouts.tsx` exposes `WorkoutsProvider` and `useWorkouts()`. On mount it loads all rows from SQLite; `addWorkout()` does an optimistic update then persists. Context type: `{ workouts, addWorkout, isLoading, error }`. `store/exercises.tsx` follows the same load-on-mount pattern but is read-only so far: `ExercisesProvider` + `useExercises()` expose `{ exercises, isLoading, error }`. Both providers wrap `AppNavigator` in `app/_layout.tsx`, and `isLoading` there is the OR of both stores' loading states.
 
 **Theming** — `constants/theme.ts` exports `Colors` (light/dark palettes) and `Fonts`. Use `useColorScheme()` from `hooks/use-color-scheme.ts` to read the current scheme.
 
