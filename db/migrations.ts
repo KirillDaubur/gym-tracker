@@ -9,4 +9,13 @@ export const migrations: { version: number; sql: string }[] = [
       );
     `,
   },
+  {
+    version: 2,
+    sql: `
+      CREATE TABLE IF NOT EXISTS exercises (
+        id    TEXT PRIMARY KEY NOT NULL,
+        name  TEXT NOT NULL
+      );
+    `,
+  },
 ];
