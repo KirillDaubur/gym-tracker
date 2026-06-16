@@ -45,10 +45,12 @@ db/
   client.ts            # singleton DB connection, runs migrations on open
   migrations.ts        # ordered migration array — append to add tables
   workouts.ts          # typed DAO (getAllWorkouts, insertWorkout, …)
+  exercises.ts         # typed DAO (getAllExercises, searchExercisesByName, …)
 store/
   workouts.tsx         # WorkoutsProvider + useWorkouts() hook
 types/
   workout.ts           # Workout type
+  exercise.ts          # Exercise type
 components/
   themed-text.tsx      # dark-mode-aware Text wrapper
   themed-view.tsx      # dark-mode-aware View wrapper
@@ -64,6 +66,11 @@ type Workout = {
   id: string;    // UUID
   date: string;  // ISO 8601
   name?: string;
+};
+
+type Exercise = {
+  id: string;   // UUID
+  name: string;
 };
 ```
 

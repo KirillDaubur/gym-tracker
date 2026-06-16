@@ -13,9 +13,8 @@ npm run ios        # Start and open on iOS simulator
 npm run lint       # Run ESLint via expo lint
 npm run format     # Format all source files with Prettier (auto-fix)
 npm run format:check  # Check formatting without writing (good for CI)
+npm test           # Run the Jest test suite
 ```
-
-No test suite is configured yet.
 
 ## Code style
 
@@ -50,6 +49,7 @@ git add path/to/file.tsx && git commit -m "message"
 - `db/migrations.ts` — ordered array of `{ version, sql }` migration objects. Add new tables by appending a new entry; already-applied versions are never re-run.
 - `db/client.ts` — singleton `getDb()` that opens `gymtracker.db`, enables WAL mode + foreign keys, and runs pending migrations on first call.
 - `db/workouts.ts` — typed DAO: `getAllWorkouts`, `insertWorkout`, `updateWorkout`, `deleteWorkout`.
+- `db/exercises.ts` — typed DAO: `getAllExercises`, `getExerciseById`, `searchExercisesByName`, `insertExercise`, `updateExercise`, `deleteExercise`.
 
 **State** — `store/workouts.tsx` exposes `WorkoutsProvider` and `useWorkouts()`. On mount it loads all rows from SQLite; `addWorkout()` does an optimistic update then persists. Context type: `{ workouts, addWorkout, isLoading, error }`.
 
